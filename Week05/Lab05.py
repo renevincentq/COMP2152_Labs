@@ -37,7 +37,6 @@ def fib(n):
     # Recursive case - Return fib(n-1) + fib(n-2)
     return fib(n-1) + fib(n-2)
 
-
 # Test cases for Fibonacci
 print("Fibonacci Sequence (F(0) to F(10)):")
 print("-" * 30)
