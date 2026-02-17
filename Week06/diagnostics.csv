@@ -1,0 +1,4 @@
+2026-02-17 11:44:39,ping,youtube.com,N/A,Failed
+2026-02-17 11:44:57,nslookup,youtube.com,Not found,Failed
+2026-02-17 11:45:40,ifconfig,en0,Error,Failed
+2026-02-17 11:45:51,arp,local,0 devices,Captured
