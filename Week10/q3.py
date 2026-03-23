@@ -53,40 +53,62 @@ def display_events(events):
         print(f"  [{row[1]}]  {row[4]:<6}  {row[2]:<8}  {row[3]:<18}  {row[5]}")
 
 
-# TODO: Complete get_events_by_severity(severity)
 #   Connect to DB_NAME.
 #   SELECT all rows from audit_log WHERE severity matches the parameter.
 #   Fetch all rows, close the connection, and return the list.
 def get_events_by_severity(severity):
-    pass
+    cxn = sqlite3.connect(DB_NAME)
+    csr = cxn.cursor()
+    csr.execute("SELECT * from audit_log WHERE severity = ?",(severity,))
+    rows = csr.fetchall()
+    cxn.close()
+    return rows
 
 
-# TODO: Complete get_recent_events(limit)
 #   Connect to DB_NAME.
 #   SELECT all rows from audit_log ORDER BY timestamp DESC LIMIT ?
 #   Use the limit parameter for the LIMIT value.
 #   Fetch all rows, close the connection, and return the list.
 def get_recent_events(limit):
-    pass
+    cxn = sqlite3.connect(DB_NAME)
+    csr = cxn.cursor()
+    csr.execute("SELECT * from audit_log ORDER BY timestamp DESC LIMIT ?", (limit,))
+    rows = csr.fetchall()
+    cxn.close()
+    return rows
 
 
-# TODO: Complete count_by_severity()
 #   Connect to DB_NAME.
 #   Execute: SELECT severity, COUNT(*) FROM audit_log
 #            GROUP BY severity ORDER BY COUNT(*) DESC
 #   Fetch all rows, close the connection, and return the list.
 def count_by_severity():
-    pass
+    cxn = sqlite3.connect(DB_NAME)
+    csr = cxn.cursor()
+    csr.execute("SELECT severity, COUNT(*) FROM audit_log GROUP by severity ORDER BY COUNT(*) DESC")
+    rows = csr.fetchall()
+    cxn.close()
+    return rows
 
 
-# TODO: Complete safe_query(query)
 #   Connect to DB_NAME.
 #   Try to execute the query using cursor.execute(query).
 #   If successful, fetch all rows and return them.
 #   If sqlite3.Error occurs, print f"Database error: {e}" and return [].
 #   Always close the connection in a finally block.
 def safe_query(query):
-    pass
+    cxn = sqlite3.connect(DB_NAME)
+    csr = cxn.cursor()
+    try:
+        csr.execute(query)
+        rows = csr.fetchall()
+        return rows
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+        return []
+    finally:
+        # Note to self: The return statement is held until after the finally block is run
+        cxn.close()
 
 
 # ============================================================

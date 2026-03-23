@@ -33,28 +33,39 @@ def display_credentials(credentials):
         print(f"  {row[1]:<14} | {row[2]:<12} | {row[3]}")
 
 
-# TODO: Complete add_credential(website, username, password)
 #   Connect to DB_NAME.
 #   INSERT a row into vault with: website, username, password.
 #   Commit and close the connection.
 def add_credential(website, username, password):
-    pass
+    cxn = sqlite3.connect(DB_NAME)
+    cursor = cxn.cursor()
+    cursor.execute("INSERT INTO vault (website, username, password) VALUES (?, ?, ?)", (website, username, password))
+    cxn.commit()
+    cxn.close()
 
 
-# TODO: Complete get_all_credentials()
 #   Connect to DB_NAME.
 #   SELECT all rows from vault, ordered by website ASC.
 #   Fetch all rows, close the connection, and return the list.
 def get_all_credentials():
-    pass
+    cxn = sqlite3.connect(DB_NAME)
+    csr =  cxn.cursor()
+    csr.execute("SELECT * FROM vault ORDER BY website ASC")
+    rows = csr.fetchall()
+    cxn.close()
+    return rows
 
 
-# TODO: Complete find_credential(website)
 #   Connect to DB_NAME.
 #   SELECT all rows from vault WHERE website matches the parameter.
 #   Fetch all rows, close the connection, and return the list.
 def find_credential(website):
-    pass
+    cxn = sqlite3.connect(DB_NAME)
+    csr = cxn.cursor()
+    csr.execute("SELECT * FROM vault WHERE website = ?", (website,))
+    rows = csr.fetchall()
+    cxn.close()
+    return rows
 
 
 # --- Main (provided) ---
